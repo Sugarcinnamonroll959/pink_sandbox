@@ -2,9 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Aesthetic Python Sandbox</title>
-    <!-- Load Pyodide for free browser-side Python execution -->
-    <script src="https://jsdelivr.net"></script>
+    <title>Instant Aesthetic Python Sandbox</title>
     <style>
         /* Matches your notebook's clean, soft, airy aesthetic */
         body {
@@ -72,6 +70,13 @@
             transform: translateY(-1px);
         }
 
+        button:disabled {
+            background-color: #EAEAEA;
+            color: #A0A0A0;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
         /* Clean minimalist terminal output box */
         #output {
             width: 100%;
@@ -95,60 +100,51 @@
             <div class="box-title">୨୧ main.py</div>
             <textarea id="code"># Write your Python code here...
 print("Hello from your beautiful notebook! ✨")
-print("2 + 2 =", 2 + 2)</textarea>
+print("Instant execution check:", 5 * 5)</textarea>
         </div>
         
-        <button onclick="runPython()">⚡ RUN PROGRAM</button>
+        <button id="runBtn" onclick="runPython()">⚡ RUN PROGRAM</button>
         
         <div>
             <div class="box-title">✦ Console Output</div>
-            <div id="output">Initializing Python... 🌱</div>
+            <div id="output">Your sandbox is ready! Type some code and hit Run. ✨</div>
         </div>
     </div>
 
     <script>
-        let pyodideInstance = null;
-        let isReady = false;
-
-        // Start loading Python immediately when page opens
-        async function initPyodide() {
-            try {
-                pyodideInstance = await loadPyodide();
-                isReady = true;
-                document.getElementById("output").innerText = "Python engine ready! ✨ Click Run Program to test.";
-            } catch (err) {
-                document.getElementById("output").innerText = "Error initializing Python: " + err;
-            }
-        }
-        initPyodide();
-
         async function runPython() {
-            if (!isReady) {
-                document.getElementById("output").innerText = "Still spinning up the environment... give me one second! 💕";
-                return;
-            }
+            const code = document.getElementById("code").value;
+            const outputDiv = document.getElementById("output");
+            const runBtn = document.getElementById("runBtn");
 
-            let outputDiv = document.getElementById("output");
             outputDiv.innerText = "Running... ⚡";
-
-            let code = document.getElementById("code").value;
+            runBtn.disabled = true;
 
             try {
-                // This Python snippet redirects print statements so JavaScript can read it
-                await pyodideInstance.runPythonAsync(`
-                    import sys
-                    import io
-                    sys.stdout = io.StringIO()
-                `);
+                // Uses a fast, free, public API to execute Python code instantly in the cloud
+                const response = await fetch("https://emkc.org", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        language: "python",
+                        version: "3.10.0",
+                        files: [{ content: code }]
+                    })
+                });
+
+                const data = await response.json();
                 
-                // Execute user's code
-                await pyodideInstance.runPythonAsync(code);
-                
-                // Extract whatever printed to the screen
-                let stdout = await pyodideInstance.runPythonAsync("sys.stdout.getvalue()");
-                outputDiv.innerText = stdout || "(Code ran perfectly with no output text!)";
+                if (data.run) {
+                    // Combine standard output and error text if there's a problem
+                    let result = data.run.output;
+                    outputDiv.innerText = result || "(Code ran perfectly with no output text!)";
+                } else {
+                    outputDiv.innerText = "⚠️ Execution failed to start.";
+                }
             } catch (err) {
-                outputDiv.innerText = "⚠️ Error in code:\n" + err;
+                outputDiv.innerText = "⚠️ Connection error:\n" + err;
+            } finally {
+                runBtn.disabled = false;
             }
         }
     </script>

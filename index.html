@@ -1,158 +1,157 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
+<head>
+    <meta charset="UTF-8">
     <title>Aesthetic Python Sandbox</title>
-    <!-- Load Pyodide for free, local browser Python execution -->
+    <!-- Load Pyodide for free browser-side Python execution -->
     <script src="https://jsdelivr.net"></script>
     <style>
-      /* Matches your notebook's clean, soft, airy aesthetic */
-      body {
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica,
-          Arial, sans-serif;
-        background-color: #ffffff;
-        margin: 0;
-        padding: 15px;
-        color: #4a4a4a;
-      }
+        /* Matches your notebook's clean, soft, airy aesthetic */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+            background-color: #FFFFFF;
+            margin: 0;
+            padding: 15px;
+            color: #4A4A4A;
+        }
 
-      .sandbox-container {
-        display: flex;
-        flex-direction: column;
-        gap: 12px;
-        max-width: 100%;
-      }
+        .sandbox-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            max-width: 100%;
+        }
 
-      /* Soft pastel pink code editor container */
-      .box-title {
-        font-size: 13px;
-        font-weight: 600;
-        letter-spacing: 0.5px;
-        color: #8e7c80;
-        margin-bottom: 4px;
-        text-transform: uppercase;
-      }
+        .box-title {
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            color: #8E7C80;
+            margin-bottom: 4px;
+            text-transform: uppercase;
+        }
 
-      textarea {
-        width: 100%;
-        height: 180px;
-        background-color: #fff0f3; /* Ultra-soft blush pink */
-        color: #5c4d50;
-        font-family: "Courier New", Courier, monospace;
-        font-size: 14px;
-        padding: 12px;
-        border: 1.5px solid #ffccd5; /* Soft pink border */
-        border-radius: 12px; /* Smooth rounded corners */
-        box-sizing: border-box;
-        resize: vertical;
-        outline: none;
-      }
+        /* Soft pastel pink code editor container */
+        textarea {
+            width: 100%;
+            height: 180px;
+            background-color: #FFF0F3; /* Ultra-soft blush pink */
+            color: #5C4D50;
+            font-family: "Courier New", Courier, monospace;
+            font-size: 14px;
+            padding: 12px;
+            border: 1.5px solid #FFCCD5; /* Soft pink border */
+            border-radius: 12px; /* Smooth rounded corners */
+            box-sizing: border-box;
+            resize: vertical;
+            outline: none;
+        }
 
-      textarea:focus {
-        border-color: #ffb3c1;
-        background-color: #ffe5ec;
-      }
+        textarea:focus {
+            border-color: #FFB3C1;
+            background-color: #FFE5EC;
+        }
 
-      /* Aesthetic Minimalist Run Button */
-      button {
-        align-self: flex-start;
-        background-color: #ffb3c1; /* Accent pink */
-        color: #ffffff;
-        font-size: 13px;
-        font-weight: bold;
-        padding: 8px 20px;
-        border: none;
-        border-radius: 20px; /* Pillow-soft round button */
-        cursor: pointer;
-        transition: all 0.2s ease;
-        box-shadow: 0 2px 5px rgba(255, 179, 193, 0.3);
-      }
+        /* Aesthetic Minimalist Run Button */
+        button {
+            align-self: flex-start;
+            background-color: #FFB3C1; /* Accent pink */
+            color: #FFFFFF;
+            font-size: 13px;
+            font-weight: bold;
+            padding: 8px 20px;
+            border: none;
+            border-radius: 20px; /* Pillow-soft round button */
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 5px rgba(255, 179, 193, 0.3);
+        }
 
-      button:hover {
-        background-color: #ff93ac;
-        transform: translateY(-1px);
-      }
+        button:hover {
+            background-color: #FF93AC;
+            transform: translateY(-1px);
+        }
 
-      button:active {
-        transform: translateY(1px);
-      }
-
-      /* Clean minimalist terminal output box */
-      #output {
-        width: 100%;
-        min-height: 80px;
-        background-color: #fafafa; /* Off-white terminal */
-        color: #655658;
-        padding: 12px;
-        font-family: "Courier New", Courier, monospace;
-        font-size: 13px;
-        border: 1.5px solid #eaeaea;
-        border-radius: 12px;
-        box-sizing: border-box;
-        white-space: pre-wrap;
-      }
+        /* Clean minimalist terminal output box */
+        #output {
+            width: 100%;
+            min-height: 80px;
+            background-color: #FAFAFA; /* Off-white terminal */
+            color: #655658;
+            padding: 12px;
+            font-family: "Courier New", Courier, monospace;
+            font-size: 13px;
+            border: 1.5px solid #EAEAEA;
+            border-radius: 12px;
+            box-sizing: border-box;
+            white-space: pre-wrap;
+        }
     </style>
-  </head>
-  <body>
+</head>
+<body>
+
     <div class="sandbox-container">
-      <div>
-        <div class="box-title">୨୧ main.py</div>
-        <textarea id="code">
-# Write your Python code here...
+        <div>
+            <div class="box-title">୨୧ main.py</div>
+            <textarea id="code"># Write your Python code here...
 print("Hello from your beautiful notebook! ✨")
-print(2 + 2)</textarea
-        >
-      </div>
-
-      <button onclick="runPython()">⚡ RUN PROGRAM</button>
-
-      <div>
-        <div class="box-title">✦ Console Output</div>
-        <div id="output">Click run to see your code action...</div>
-      </div>
+print("2 + 2 =", 2 + 2)</textarea>
+        </div>
+        
+        <button onclick="runPython()">⚡ RUN PROGRAM</button>
+        
+        <div>
+            <div class="box-title">✦ Console Output</div>
+            <div id="output">Initializing Python... 🌱</div>
+        </div>
     </div>
 
     <script>
-      let pyodideReady = false;
-      let pyodideInstance = null;
+        let pyodideInstance = null;
+        let isReady = false;
 
-      // Warm up Pyodide immediately in the background
-      async function initPyodide() {
-        document.getElementById("output").innerText =
-          "Initializing python environment... 🌱";
-        pyodideInstance = await loadPyodide();
-        pyodideReady = true;
-        document.getElementById("output").innerText =
-          "Python environment ready! ✨";
-      }
-      initPyodide();
-
-      async function runPython() {
-        if (!pyodideReady) {
-          document.getElementById("output").innerText =
-            "Still loading, please give me a brief second! 💕";
-          return;
+        // Start loading Python immediately when page opens
+        async function initPyodide() {
+            try {
+                pyodideInstance = await loadPyodide();
+                isReady = true;
+                document.getElementById("output").innerText = "Python engine ready! ✨ Click Run Program to test.";
+            } catch (err) {
+                document.getElementById("output").innerText = "Error initializing Python: " + err;
+            }
         }
+        initPyodide();
 
-        let code = document.getElementById("code").value;
-        try {
-          // Redirect standard output to clean text
-          await pyodideInstance.runPythonAsync(`
+        async function runPython() {
+            if (!isReady) {
+                document.getElementById("output").innerText = "Still spinning up the environment... give me one second! 💕";
+                return;
+            }
+
+            let outputDiv = document.getElementById("output");
+            outputDiv.innerText = "Running... ⚡";
+
+            let code = document.getElementById("code").value;
+
+            try {
+                // This Python snippet redirects print statements so JavaScript can read it
+                await pyodideInstance.runPythonAsync(`
                     import sys
                     import io
                     sys.stdout = io.StringIO()
                 `);
-          await pyodideInstance.runPythonAsync(code);
-          let stdout = await pyodideInstance.runPythonAsync(
-            "sys.stdout.getvalue()"
-          );
-          document.getElementById("output").innerText =
-            stdout || "(Code ran perfectly with no output text!)";
-        } catch (err) {
-          // Pretty-print error formatting
-          document.getElementById("output").innerText = "⚠️ Error:\n" + err;
+                
+                // Execute user's code
+                await pyodideInstance.runPythonAsync(code);
+                
+                // Extract whatever printed to the screen
+                let stdout = await pyodideInstance.runPythonAsync("sys.stdout.getvalue()");
+                outputDiv.innerText = stdout || "(Code ran perfectly with no output text!)";
+            } catch (err) {
+                outputDiv.innerText = "⚠️ Error in code:\n" + err;
+            }
         }
-      }
     </script>
-  </body>
+</body>
 </html>
+
